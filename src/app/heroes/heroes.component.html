@@ -1,0 +1,40 @@
+<!-- using Pipe which activates UppercasePipe to be able to adjust your html -->
+<!-- Pipes are a good way to format string s, currency amounts, dates and other display data -->
+<!-- the compoent should only display the selected hero details if the selectedHero exists -->
+<!-- how ngIf works : 
+     when selectedHero is undefined, the ngIf removes the hero details from the DOM. there are no selectedHero bindings to consider.
+     when the user pickes a hero, selectedHero has a value and ngIf puts the hero detail into the DOM
+ -->
+<div *ngIf="selectedHero">
+  <h2>{{ selectedHero.name | uppercase }} Details</h2>
+  <div>id: {{ selectedHero.id }}</div>
+  <!-- <div><span>name: </span>{{ selectedHero.name }}</div> -->
+
+  <!-- to automate that data flow, setup a two-way data binding between the input from element and the hero.name property -->
+  <div>
+    <!-- <lable for="name"> Hero name:</lable> -->
+    <!-- it will shows you error even though ngModel is a valid Angular directive, it inst available by default -->
+    <!-- it belongs to the optional FormsModule -->
+    <!-- ngModel is Angular's two-way data binding syntax -->
+    <input id="hero-name" [(ngModel)]="selectedHero.name" placeholder="name">
+  </div>
+</div>
+
+<h2>My Heroes</h2>
+<ul class="heroes">
+  <!-- ngFor is a repeater directive -->
+  <li *ngFor="let hero of heroes">
+    <!-- The parentheses around click tells angular to listen for the button element's click event -->
+    <!-- now we have to define onSelect method in HeroesComponet -->
+    <!-- Angular's class binding can add and remove a CSS class condtionally. Add[class.some-css-class]="some-condtion" to the element you want to style -->
+    <!-- when the current row hero is the same as the selectedHero, Angular adds the selected CSS class
+         when the two heroes are different, Angular removes the class
+     -->
+    <button [class.selected]="hero === selectedHero" type="button" (click)="onSelect(hero)">
+
+      <span class="badge">{{ hero.id }}</span>
+      <span class="name">{{ hero.name }}</span>
+    </button>
+
+  </li>
+</ul>
